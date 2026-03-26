@@ -1,173 +1,192 @@
 "use client";
-import React, { useState, useEffect } from 'react';
-import { FaPlay, FaGlobeAmericas, FaBolt, FaRegClock, FaShareAlt, FaSignal } from 'react-icons/fa';
-import { translations } from "../utils/translations"; // Path check karein
+import { useState } from 'react';
+import { FaTv, FaRegClock, FaUsers, FaShareAlt, FaPlay, FaSignal, FaBroadcastTower, FaBolt } from 'react-icons/fa';
+
+const liveUpdates = [
+  { id: 1, time: "Just Now", title: "Breaking News", text: "DG News Exclusive: Naye digital law par sarkar ka bada faisla.", type: "urgent" },
+  { id: 2, time: "10 Mins Ago", title: "Sports Update", text: "Champions Trophy ki taiyariyan tez, stadium ka jayza lene pahunchi team.", type: "normal" },
+  { id: 3, time: "22 Mins Ago", title: "Weather", text: "Mumbai-Pune Expressway par bhari kohra, travel advisory jaari.", type: "urgent" },
+];
 
 export default function LiveNewsSection() {
-  const [lang, setLang] = useState("en");
-  const [activeChannel, setActiveChannel] = useState('DG-MAIN');
-
-  useEffect(() => {
-    // Initial Load
-    const savedLang = localStorage.getItem("lang") || "en";
-    setLang(savedLang);
-
-    // Language Change Listener
-    const handleLang = (e: any) => setLang(e.detail);
-    window.addEventListener("langChange", handleLang);
-    return () => window.removeEventListener("langChange", handleLang);
-  }, []);
-
-  const t = translations[lang as 'en' | 'hi'];
+  const [activeChannel, setActiveChannel] = useState('main');
 
   return (
-    <section id="live-tv" className="py-16 bg-[#0f172a] text-slate-200 overflow-hidden relative font-sans selection:bg-red-500/30 transition-colors duration-300">
-      
-      {/* Soft Background Accents */}
-      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-red-500/5 rounded-full blur-[120px] -z-10"></div>
-      <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-blue-500/5 rounded-full blur-[100px] -z-10"></div>
-
-      <div className="max-w-7xl mx-auto px-6">
+    <section id="live-tv" className="py-12 md:py-24 bg-[#020617] text-white overflow-hidden">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
-        {/* --- HEADER --- */}
-        <div className="flex flex-col lg:flex-row lg:items-center justify-between mb-12 gap-8">
-          <div>
-            <div className="flex items-center gap-3 mb-2">
-              <span className="flex h-3 w-3 relative">
-                <span className="animate-ping absolute h-full w-full rounded-full bg-red-500 opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-3 w-3 bg-red-500"></span>
-              </span>
-              <span className="text-red-400 font-semibold uppercase tracking-widest text-xs">{t.liveTag}</span>
+        {/* --- Top Header Section --- */}
+        <div className="flex flex-col md:flex-row md:items-center justify-between mb-12 gap-6">
+          <div className="flex items-center gap-5">
+            <div className="h-16 w-1.5 bg-red-600 rounded-full hidden md:block"></div>
+            <div>
+              <div className="flex items-center gap-2 mb-1">
+                <FaBroadcastTower className="text-red-500 animate-pulse" />
+                <span className="text-red-500 font-black uppercase tracking-[5px] text-[10px] md:text-xs">Digital Broadcast</span>
+              </div>
+              <h2 className="text-4xl md:text-6xl font-black tracking-tighter italic">
+                LIVE <span className="text-red-600">CENTRAL</span>
+              </h2>
             </div>
-            <h2 className="text-4xl md:text-5xl font-bold tracking-tight text-white uppercase">
-              {t.liveCentral.split(' ')[0]} <span className="text-red-500">{t.liveCentral.split(' ')[1]}</span>
-            </h2>
           </div>
 
-          {/* Minimal Stats Bar */}
-          <div className="flex items-center gap-6 bg-slate-800/50 border border-slate-700/50 p-4 rounded-2xl backdrop-blur-md">
-            <div className="flex items-center gap-3 px-2 border-r border-slate-700">
-               <div className="w-10 h-10 bg-red-500/10 rounded-xl flex items-center justify-center text-red-500">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
-               </div>
-               <div>
-                  <p className="text-[10px] text-slate-400 font-bold uppercase">{t.statsViewers}</p>
-                  <p className="text-lg font-bold text-white tracking-tight">28,491</p>
-               </div>
-            </div>
-            <div className="px-2">
-               <p className="text-[10px] text-slate-400 font-bold uppercase">{t.statsSignal}</p>
-               <p className="text-sm font-bold text-emerald-400 flex items-center gap-2 tracking-wide uppercase">{t.statsExcellent} <FaSignal className="text-[10px]" /></p>
-            </div>
+          {/* Real-time Stats Badge */}
+          <div className="flex items-center gap-1 bg-white/5 border border-white/10 p-1.5 rounded-2xl backdrop-blur-xl">
+             <div className="flex items-center gap-3 px-4 py-2 bg-red-600/10 border border-red-600/20 rounded-xl">
+                <div className="relative flex h-3 w-3">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-500 opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-3 w-3 bg-red-600"></span>
+                </div>
+                <span className="text-sm font-black text-red-500 tracking-tighter">18,432 VIEWERS</span>
+             </div>
+             <div className="hidden sm:flex items-center gap-4 px-4">
+                <div className="text-center">
+                  <p className="text-[10px] text-slate-500 dark:text-slate-400 font-bold uppercase">Signal</p>
+                  <p className="text-xs font-black text-green-500">EXCELLENT</p>
+                </div>
+                <div className="text-center">
+                  <p className="text-[10px] text-slate-500 dark:text-slate-400 font-bold uppercase">Latency</p>
+                  <p className="text-xs font-black">24MS</p>
+                </div>
+             </div>
           </div>
         </div>
 
-        {/* --- MAIN GRID --- */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
+        {/* --- Main Grid --- */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
           
-          <div className="lg:col-span-8 flex flex-col gap-6">
-            <div className="group relative aspect-video rounded-3xl overflow-hidden border border-slate-700 shadow-xl bg-slate-900">
+          {/* 1. Video Section (Left Side - 8 Cols) */}
+          <div className="lg:col-span-8 space-y-6">
+            <div className="group relative aspect-video bg-black rounded-[2.5rem] overflow-hidden border-[8px] border-slate-900 shadow-[0_0_100px_rgba(220,38,38,0.15)] transition-all duration-700 hover:border-red-600/40">
+              
               <img 
-                src="https://images.unsplash.com/photo-1495020689067-958852a7765e?q=80&w=2000" 
-                className="absolute inset-0 w-full h-full object-cover opacity-60 group-hover:scale-105 transition-transform duration-[2s]"
-                alt="Broadcast"
+                src="https://images.unsplash.com/photo-1495020689067-958852a7765e?q=80&w=2070&auto=format&fit=crop" 
+                alt="Live Stream" 
+                className="w-full h-full object-cover opacity-40 group-hover:scale-105 transition-all duration-1000"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-transparent"></div>
+
+              {/* Play UI Overlay */}
+              <div className="absolute inset-0 bg-gradient-to-tr from-[#020617]/80 via-transparent to-transparent"></div>
               
               <div className="absolute inset-0 flex items-center justify-center">
-                <button className="w-20 h-20 bg-white/10 backdrop-blur-md text-white border border-white/20 rounded-full flex items-center justify-center pl-1 hover:bg-red-500 hover:border-red-500 transition-all shadow-2xl active:scale-95">
-                  <FaPlay size={24} />
+                <button className="relative group/btn">
+                  <div className="absolute inset-0 bg-red-600 rounded-full blur-2xl opacity-40 group-hover/btn:opacity-80 transition-all"></div>
+                  <div className="relative w-20 h-20 md:w-28 md:h-28 bg-red-600 rounded-full flex items-center justify-center pl-2 shadow-2xl transition-transform hover:scale-110 active:scale-95">
+                    <FaPlay className="text-white text-3xl md:text-5xl" />
+                  </div>
                 </button>
               </div>
 
-              <div className="absolute top-6 left-6 flex gap-3">
-                <div className="bg-red-500 text-white px-4 py-1.5 rounded-lg font-bold text-[10px] uppercase tracking-wider shadow-lg">
-                  {activeChannel}
-                </div>
-                <div className="bg-slate-900/80 backdrop-blur-md text-slate-300 px-4 py-1.5 rounded-lg font-bold text-[10px] uppercase border border-slate-700">
-                  {t.statsQuality}
-                </div>
+              {/* Top Control Overlay */}
+              <div className="absolute top-8 left-8 flex gap-3">
+                <span className="bg-red-600 px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest flex items-center gap-2">
+                  <span className="h-1.5 w-1.5 bg-white dark:bg-slate-900 rounded-full animate-pulse"></span> LIVE
+                </span>
+                <span className="bg-white/10 backdrop-blur-md border border-white/20 px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest">
+                  DG NEWS MAIN
+                </span>
               </div>
 
-              <div className="absolute bottom-6 left-6 right-6">
-                <div className="bg-slate-900/60 backdrop-blur-xl border border-white/5 p-6 rounded-2xl">
-                  <p className="text-red-400 font-bold text-[10px] uppercase tracking-widest mb-1">{t.headlineTag}</p>
-                  <h3 className="text-xl md:text-2xl font-bold text-white leading-tight tracking-tight">
-                    DG News Impact: Sarkar ne maani maang, naye tax rules par phir se hogi charcha.
+              {/* Bottom News Bar */}
+              <div className="absolute bottom-0 inset-x-0 p-8 md:p-12">
+                <div className="bg-red-600/10 backdrop-blur-sm border-l-4 border-red-600 p-4 rounded-r-2xl max-w-3xl">
+                  <span className="text-red-500 font-black text-xs uppercase tracking-widest mb-1 block">Headlines</span>
+                  <h3 className="text-xl md:text-3xl font-black leading-tight tracking-tight">
+                    Desh ki sabse badi khabar: Shehar mein alert jaari, dekhiye exclusive ground reporting DG News par.
                   </h3>
                 </div>
               </div>
             </div>
 
-            <div className="grid grid-cols-4 gap-3">
-              {['DG-MAIN', 'POLITICS', 'GLOBAL', 'BIZ'].map((ch) => (
-                <button 
+            {/* Quick Channel Tabs */}
+            <div className="flex gap-4 p-2 bg-slate-900/50 rounded-2xl border border-white/5 overflow-x-auto whitespace-nowrap scrollbar-hide">
+               {['DG MAIN', 'DG BIZ', 'DG SPORTS', 'DG LOCAL'].map((ch) => (
+                 <button 
                   key={ch}
+                  className={`px-6 py-3 rounded-xl text-[10px] font-black tracking-widest transition-all ${activeChannel === ch ? 'bg-red-600 text-white shadow-lg shadow-red-600/20' : 'bg-white/5 text-slate-400 hover:bg-white/10'}`}
                   onClick={() => setActiveChannel(ch)}
-                  className={`py-4 rounded-xl text-[10px] font-bold tracking-widest border transition-all duration-300 ${activeChannel === ch ? 'bg-red-500 border-red-500 text-white shadow-lg' : 'bg-slate-800/40 border-slate-700/50 text-slate-400 hover:text-white hover:bg-slate-800'}`}
-                >
-                  {ch}
-                </button>
-              ))}
+                 >
+                   {ch}
+                 </button>
+               ))}
             </div>
           </div>
 
-          {/* Right Feed Panel */}
-          <div className="lg:col-span-4">
-            <div className="bg-slate-800/30 border border-slate-700/50 rounded-3xl p-8 flex flex-col h-full shadow-lg">
-              <div className="flex items-center justify-between mb-8 pb-4 border-b border-slate-700/50">
-                <div className="flex items-center gap-2">
-                  <FaBolt className="text-amber-400" />
-                  <span className="text-xs font-bold uppercase tracking-widest text-slate-300">{t.quickFeed}</span>
+          {/* 2. Timeline Section (Right Side - 4 Cols) */}
+          <div className="lg:col-span-4 flex flex-col h-full space-y-6">
+            <div className="bg-slate-900/40 border border-white/5 rounded-[2.5rem] p-8 backdrop-blur-md flex flex-col h-full">
+              <div className="flex items-center justify-between mb-10">
+                <div className="flex items-center gap-3">
+                  <FaBolt className="text-yellow-500" />
+                  <h3 className="text-sm font-black uppercase tracking-[3px] text-slate-200">Fast Feed</h3>
                 </div>
-                <FaShareAlt className="text-slate-500 cursor-pointer hover:text-white transition-colors" size={14} />
+                <FaShareAlt className="text-slate-500 dark:text-slate-400 cursor-pointer hover:text-white" />
               </div>
 
-              <div className="space-y-8 flex-1">
-                {t.liveUpdates.map((u: any) => (
-                  <div key={u.id} className="relative pl-6 border-l border-slate-700 group cursor-pointer hover:border-red-500/50 transition-colors">
-                    <div className={`absolute -left-[4.5px] top-0 w-2 h-2 rounded-full transition-all ${u.type === 'urgent' ? 'bg-red-500 shadow-[0_0_8px_#ef4444]' : 'bg-slate-600'}`}></div>
-                    <div className="space-y-1">
-                      <div className="flex justify-between items-center text-[10px] font-bold tracking-wider">
-                        <span className={u.type === 'urgent' ? 'text-red-400' : 'text-slate-500'}>{u.title}</span>
-                        <span className="text-slate-600 flex items-center gap-1 uppercase"><FaRegClock /> {u.time}</span>
+              <div className="space-y-10 flex-1 overflow-y-auto pr-2 custom-scrollbar max-h-[500px]">
+                {liveUpdates.map((update) => (
+                  <div key={update.id} className="relative pl-8 border-l border-slate-800 hover:border-red-600 transition-colors group">
+                    <div className={`absolute -left-[5px] top-0 h-2.5 w-2.5 rounded-full transition-all group-hover:scale-150 ${update.type === 'urgent' ? 'bg-red-600 shadow-[0_0_10px_red]' : 'bg-slate-600'}`}></div>
+                    <div className="space-y-2">
+                      <div className="flex justify-between items-center">
+                        <span className="text-[10px] font-black text-red-500 uppercase tracking-widest">{update.title}</span>
+                        <span className="text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase flex items-center gap-1">
+                          <FaRegClock /> {update.time}
+                        </span>
                       </div>
-                      <p className="text-sm font-medium text-slate-300 group-hover:text-white transition-colors leading-relaxed">
-                        {u.text}
+                      <p className={`text-sm md:text-base font-bold leading-relaxed transition-colors ${update.type === 'urgent' ? 'text-white' : 'text-slate-400 group-hover:text-slate-200'}`}>
+                        {update.text}
                       </p>
                     </div>
                   </div>
                 ))}
               </div>
 
-              <button className="mt-8 w-full py-4 bg-slate-700 text-white rounded-xl font-bold text-xs uppercase tracking-widest hover:bg-red-500 transition-all shadow-md">
-                {t.fullCoverage}
+              <button className="mt-10 w-full py-5 bg-white dark:bg-slate-900 text-black hover:bg-red-600 hover:text-white rounded-2xl font-black text-xs uppercase tracking-[3px] transition-all shadow-xl active:scale-95">
+                Download Full Report
               </button>
             </div>
           </div>
         </div>
 
-        {/* --- TICKER --- */}
-        <div className="mt-12 bg-slate-900 border border-slate-700 rounded-2xl overflow-hidden flex h-14 shadow-xl">
-          <div className="bg-red-500 text-white px-8 h-full flex items-center font-bold text-sm z-10 whitespace-nowrap uppercase tracking-widest">
-            {t.latestHeadlines}
+        {/* --- 3. Professional News Ticker --- */}
+        <div className="mt-16 bg-white dark:bg-slate-900 flex items-center overflow-hidden h-16 rounded-2xl shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
+          <div className="bg-red-600 text-white px-8 md:px-12 h-full flex items-center font-black italic text-base md:text-xl z-10 whitespace-nowrap shadow-2xl">
+            TOP STORIES
           </div>
-          <div className="flex-1 overflow-hidden relative flex items-center">
-            <div className="animate-marquee whitespace-nowrap flex gap-16">
-              {[1, 2].map((i) => (
-                <p key={i} className="text-slate-300 font-medium text-sm uppercase tracking-wide">
-                  • DG NEWS: Desh ki har badi khabar sabse pehle • BIZ: Nifty hits record high • WEATHER: Mumbai alert • SPORTS: India clinches Gold
-                </p>
-              ))}
+          <div className="flex-1 overflow-hidden bg-white dark:bg-slate-900">
+            <div className="animate-marquee whitespace-nowrap flex items-center h-full">
+              <p className="inline-block text-black font-black text-sm md:text-xl mx-8 uppercase tracking-tighter">
+                • PM Modi Visit: Shehar ko mili nayi saugat • Cricket: Team India ne jeeta series • DG News Fact Check: Viral message nikla farzi • Weather Alert: North India mein sardi ka naya record
+              </p>
+              <p className="inline-block text-black font-black text-sm md:text-xl mx-8 uppercase tracking-tighter">
+                • PM Modi Visit: Shehar ko mili nayi saugat • Cricket: Team India ne jeeta series • DG News Fact Check: Viral message nikla farzi • Weather Alert: North India mein sardi ka naya record
+              </p>
             </div>
           </div>
         </div>
 
       </div>
 
+      {/* Global CSS for Section */}
       <style jsx>{`
-        @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
-        .animate-marquee { animation: marquee 40s linear infinite; }
+        @keyframes marquee {
+          0% { transform: translateX(0); }
+          100% { transform: translateX(-50%); }
+        }
+        .animate-marquee {
+          animation: marquee 25s linear infinite;
+        }
+        .scrollbar-hide::-webkit-scrollbar {
+          display: none;
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+          width: 3px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+          background: #1e293b;
+          border-radius: 10px;
+        }
       `}</style>
     </section>
   );

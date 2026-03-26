@@ -1,122 +1,65 @@
-"use client";
+import { FaNewspaper, FaMicrophoneAlt, FaShieldAlt, FaMobileAlt, FaBolt, FaPlayCircle } from 'react-icons/fa';
 
-import { translations } from '@/app/utils/translations';
-import React, { useState, useEffect } from 'react';
-import { FaNewspaper, FaMicrophoneAlt, FaShieldAlt, FaBolt, FaPlayCircle, FaBroadcastTower } from 'react-icons/fa';
+const services = [
+  { title: "DG E-Paper", desc: "Har subah apne mobile par payein digital newspaper ka asli anubhav.", icon: <FaNewspaper />, color: "from-red-500 to-orange-500" },
+  { title: "DG Fact-Check", desc: "Social media par viral ho rahi afwahon ki sacchai janiye hamare experts se.", icon: <FaShieldAlt />, color: "from-blue-500 to-cyan-500" },
+  { title: "Audio News", desc: "Kaam ke saath-saath suniye din bhar ki badi khabrein hamare podcast par.", icon: <FaMicrophoneAlt />, color: "from-purple-500 to-pink-500" },
+  { title: "Hyper-Local News", desc: "Apne shehar aur colony ki har choti-badi khabar se jude rahiye.", icon: <FaBolt />, color: "from-yellow-500 to-amber-500" },
+  { title: "Video Shorts", desc: "60 seconds mein poore din ka update, fast aur accurate.", icon: <FaPlayCircle />, color: "from-orange-500 to-red-500" },
+  { title: "App Exclusive", desc: "Personalized notifications aur offline reading ka maza lein.", icon: <FaMobileAlt />, color: "from-green-500 to-emerald-500" }
+];
 
 export default function Services() {
-  const [lang, setLang] = useState("en");
-
-  useEffect(() => {
-    const savedLang = localStorage.getItem("lang") || "en";
-    setLang(savedLang);
-
-    const handleLang = (e: any) => setLang(e.detail);
-    window.addEventListener("langChange", handleLang);
-    return () => window.removeEventListener("langChange", handleLang);
-  }, []);
-
-  const t = translations[lang as 'en' | 'hi'];
-
-  const serviceIcons = [
-    { icon: <FaNewspaper />, color: "bg-black" },
-    { icon: <FaShieldAlt />, color: "bg-blue-600" },
-    { icon: <FaPlayCircle />, color: "bg-orange-500" },
-    { icon: <FaMicrophoneAlt />, color: "bg-purple-600" },
-  ];
-
   return (
-    <section id="services" className="py-12 bg-white px-6">
-      <div className="max-w-7xl mx-auto">
+    // section id="services" anchor link ke liye zaroori hai
+    <section id="services" className="py-16 md:py-24 bg-[#f8fafc]">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
-        {/* Header */}
-        <div className="flex items-center justify-between mb-10 border-b border-gray-200 pb-6">
-          <div>
-            <h2 className="text-red-600 font-bold text-xs uppercase tracking-[0.3em] mb-1">
-              {t.premiumFeatures}
-            </h2>
-            <h3 className="text-3xl font-black text-black tracking-tight">
-              DG News <span className="text-red-600">{t.ecosystem}</span>
-            </h3>
-          </div>
-
-          <button className="hidden md:block border-2 border-black text-black px-6 py-2 rounded-full font-bold text-sm hover:bg-black hover:text-white transition-all">
-            {t.viewAll}
-          </button>
+        {/* Section Header - Responsive Text Sizes */}
+        <div className="text-center mb-12 md:mb-16">
+          <h2 className="text-red-600 font-bold tracking-[2px] md:tracking-[3px] uppercase text-xs md:text-sm mb-3">
+            Premium Experience
+          </h2>
+          <h3 className="text-3xl md:text-5xl font-extrabold text-gray-900 dark:text-white leading-tight">
+            Khabron Se <span className="text-red-600">Aage</span>
+          </h3>
+          <div className="w-16 md:w-24 h-1.5 bg-red-600 mx-auto mt-4 rounded-full"></div>
         </div>
 
-        {/* Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-4 auto-rows-[160px]">
-          
-          {/* Main LIVE Card */}
-          <div className="md:col-span-2 md:row-span-2 group relative overflow-hidden rounded-[2rem] bg-black text-white p-8 flex flex-col justify-end cursor-pointer">
-            
-            <div className="absolute top-6 left-6 flex items-center gap-2 bg-red-600 px-3 py-1 rounded-full animate-pulse">
-              <span className="w-2 h-2 bg-white rounded-full"></span>
-              <span className="text-[10px] font-bold uppercase">{t.liveNow}</span>
-            </div>
-
-            <img 
-              src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=1000&auto=format&fit=crop" 
-              className="absolute inset-0 w-full h-full object-cover opacity-40 group-hover:scale-110 transition-transform duration-700" 
-              alt="Live News" 
-            />
-
-            <div className="relative z-10">
-              <div className="text-4xl mb-4 text-red-500">
-                <FaBroadcastTower />
-              </div>
-              <h4 className="text-3xl font-black mb-2">{t.liveTvTitle}</h4>
-              <p className="text-gray-300 text-sm max-w-xs">{t.liveTvDesc}</p>
-            </div>
-          </div>
-
-          {/* Service Cards */}
-          {t.servicesList.map((item, index) => (
+        {/* Highlighted Cards Grid - Responsive Columns */}
+        {/* Mobile: 1 col, Tablet: 2 cols, Desktop: 3 cols */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-10">
+          {services.map((item, index) => (
             <div 
               key={index} 
-              className="group relative overflow-hidden rounded-[2rem] bg-white border border-gray-200 p-6 transition-all duration-300 hover:shadow-xl cursor-pointer flex flex-col justify-between"
+              className="group relative bg-white dark:bg-slate-900 p-1 rounded-2xl transition-all duration-500 hover:-translate-y-2 md:hover:-translate-y-3"
             >
-              <div className={`w-12 h-12 ${serviceIcons[index].color} text-white rounded-2xl flex items-center justify-center text-xl shadow-md transition-transform group-hover:-rotate-12`}>
-                {serviceIcons[index].icon}
-              </div>
+              {/* Animated Gradient Border (Highlight) */}
+              <div className={`absolute inset-0 bg-gradient-to-r ${item.color} rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-[2px]`}></div>
 
-              <div>
-                <h4 className="font-black text-black text-lg group-hover:text-red-600 transition-colors">
+              {/* Main Card Content */}
+              <div className="relative bg-white dark:bg-slate-900 p-6 md:p-8 rounded-[14px] h-full flex flex-col items-center text-center shadow-[0_10px_30px_rgba(0,0,0,0.04)] group-hover:shadow-[0_20px_40px_rgba(0,0,0,0.1)] transition-all">
+                
+                {/* Icon with Glowing Effect - Smaller on Mobile */}
+                <div className={`mb-4 md:mb-6 p-4 md:p-5 rounded-2xl bg-gradient-to-br ${item.color} text-white text-2xl md:text-3xl shadow-lg transform group-hover:rotate-[360deg] transition-transform duration-700`}>
+                  {item.icon}
+                </div>
+
+                <h4 className="text-xl md:text-2xl font-bold text-gray-800 dark:text-slate-100 mb-3 md:mb-4 group-hover:text-red-600 transition-colors">
                   {item.title}
                 </h4>
-                <p className="text-gray-600 text-xs mt-1 font-medium">
+                
+                <p className="text-gray-500 dark:text-slate-400 leading-relaxed text-xs md:text-sm mb-6 md:mb-8">
                   {item.desc}
                 </p>
-              </div>
 
-              <div className="absolute top-6 right-6 opacity-0 group-hover:opacity-100 transition-opacity">
-                <svg className="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                </svg>
+                {/* Subtle Button Highlight */}
+                <button className="mt-auto py-2 px-5 md:px-6 rounded-full border-2 border-gray-100 dark:border-slate-800 font-bold text-[10px] md:text-xs uppercase tracking-wider group-hover:bg-red-600 group-hover:text-white group-hover:border-red-600 transition-all">
+                  Get Started
+                </button>
               </div>
             </div>
           ))}
-
-          {/* App Promo Card */}
-          <div className="md:col-span-2 bg-red-600 rounded-[2rem] p-6 flex items-center justify-between text-white group cursor-pointer relative overflow-hidden">
-            
-            <div>
-              <h4 className="text-2xl font-black">{t.appTitle}</h4>
-              <p className="text-white/80 text-xs font-medium">
-                {t.appDesc}
-              </p>
-            </div>
-
-            <div className="text-5xl opacity-20 absolute -right-4 transform group-hover:scale-125 transition-transform">
-              <FaBolt />
-            </div>
-
-            <button className="bg-white text-red-600 text-[10px] font-black px-4 py-2 rounded-full uppercase tracking-tight">
-              {t.installNow}
-            </button>
-          </div>
-
         </div>
       </div>
     </section>

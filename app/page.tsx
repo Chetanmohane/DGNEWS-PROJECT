@@ -5,15 +5,14 @@ import LiveNews from "./components/LiveNews";
 import Navbar from "./components/Navbar";
 import Services from "./components/services/Services";
 
-
 export default function Home() {
   return (
-    <main className="min-h-screen bg-white scroll-smooth">
+    <main className="min-h-screen bg-white dark:bg-slate-950 scroll-smooth transition-colors duration-300">
       <Navbar />
       <section id="hero"><Hero /></section>
-      <section id="about" className="bg-gray-50"><About /></section>
+      <section id="about" className="bg-gray-50 dark:bg-slate-900 transition-colors duration-300"><About /></section>
       <section id="services"><Services /></section>
-      <LiveNews/>
+      <LiveNews />
       <footer id="footer"><Footer /></footer>
     </main>
   );

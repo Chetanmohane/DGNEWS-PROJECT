@@ -1,5 +1,39 @@
 @import "tailwindcss";
 
+/* Completely Hide All Google Translate UI Elements */
+.skiptranslate,
+.goog-te-banner-frame,
+.goog-te-banner,
+.goog-te-menu-frame,
+.goog-te-balloon-frame,
+#goog-gt-tt,
+#goog-gt-vt,
+.goog-tooltip,
+.goog-tooltip:hover,
+.goog-te-balloon-frame,
+.goog-te-menu-value span:nth-child(2),
+.goog-te-menu-value img,
+.goog-te-spinner-pos,
+.VIpgJd-ZVi9od-ORHb-nS-akv,
+.VIpgJd-ZVi9od-l4eHX-hSRGPd {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
+body {
+  top: 0 !important;
+  position: static !important;
+}
+
+.goog-text-highlight {
+  background: none !important;
+  box-shadow: none !important;
+}
+
+@custom-variant dark (&:where(.dark, .dark *));
+
 :root {
   --background: #ffffff;
   --foreground: #171717;
@@ -19,21 +53,13 @@
   }
 }
 
+.dark {
+  --background: #0a0a0a;
+  --foreground: #ededed;
+}
+
 body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
-}
-
-:root {
-  --background: #ffffff;
-  --foreground: #000000;
-}
-
-[data-theme='dark'] {
-  --background: #0a0a0a;
-  --foreground: #ffffff;
-}
-body {
-  @apply transition-colors duration-300;
 }
