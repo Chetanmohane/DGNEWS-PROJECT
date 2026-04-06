@@ -1,3 +1,11 @@
+/**
+ * The `About` function returns a section component displaying information about a news platform called
+ * DGNews with statistics and an image.
+ * @returns The About component is returning a section element with a specific styling and content
+ * structure. It includes a heading with a highlighted text, a paragraph describing the platform's
+ * goals, and two grid items displaying statistics about monthly readers and city reporters.
+ * Additionally, there is an image displayed on the right side of the section.
+ */
 // components/About.tsx
 export default function About() {
   return (

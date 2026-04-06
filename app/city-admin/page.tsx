@@ -1,3 +1,8 @@
+/* This code snippet is a TypeScript React component for a City Admin page. It includes functionalities
+such as displaying a dashboard layout for a City Admin, with menu items like City Overview, Upload
+E-Paper, Manage Reporters, and City Archives. */
+/* The code provided is a TypeScript React component for a City Admin page. It includes the following
+functionalities: */
 "use client";
 
 import { FaRegFilePdf, FaUpload, FaMapMarkerAlt, FaUsers } from 'react-icons/fa';
